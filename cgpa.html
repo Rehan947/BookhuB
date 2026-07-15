@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA / SPI to Percentage Calculator | BookhuB</title>
+    <meta name="description" content="Calculate your academic percentage instantly with our premium calculator. Supports Silver Oak, Gujarat University, GLS, L.J. University, and GSEB.">
+    <meta name="theme-color" content="#1f1c2c">
+    
+    <meta property="og:title" content="Premium CGPA / SPI to Percentage Calculator | BookhuB">
+    <meta property="og:description" content="Calculate your academic percentage instantly. Beautiful, fast, and accurate conversion for major universities.">
+    <meta property="og:type" content="website">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+            <link rel="icon" href="favicon_BB.jpeg" type="image/jpeg">
+
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #a29bfe;
+            --primary-light: #c8c5ff;
+            --primary-dark: #6c5ce7;
+            --bg-base: #1f1c2c;
+            --bg-accent: #2d2844;
+            --text-main: #ffffff;
+            --text-muted: #a4b0be;
+            --success: #00b894;
+            --error: #ff7675;
+            
+            /* Glassmorphism Variables */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border-highlight: rgba(162, 155, 254, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+    background: linear-gradient(90deg, #080821, #8e8d93);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Orbs */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .orb-1 {
+            background: var(--primary-dark);
+            width: 400px;
+            height: 400px;
+            top: -10%;
+            left: -10%;
+        }
+
+        .orb-2 {
+            background: #e056fd;
+            width: 300px;
+            height: 300px;
+            bottom: 10%;
+            right: -5%;
+            animation-delay: -5s;
+            animation-duration: 25s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10%, 15%) scale(1.1); }
+            100% { transform: translate(-5%, 20%) scale(0.9); }
+        }
+
+        /* Layout Container */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            z-index: 1;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            animation: slideDown 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 50%, #e056fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-20deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before {
+            left: 150%;
+        }
+
+        .glass-card:hover {
+            border-color: var(--glass-border-highlight);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4), 0 0 20px rgba(162, 155, 254, 0.1);
+        }
+
+        /* Dashboard Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 850px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Upgraded Inputs & Floating Labels */
+        .form-group {
+            position: relative;
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group:last-child { margin-bottom: 0; }
+
+        .form-label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            color: var(--text-muted);
+            font-size: 1rem;
+            pointer-events: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            padding: 0 0.2rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1.2rem 1rem 0.6rem 1rem;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            outline: none;
+            transition: var(--transition);
+            height: 60px;
+            font-family: inherit;
+        }
+
+        /* Select specific styling */
+        select.form-control {
+            appearance: none;
+            cursor: pointer;
+            padding-top: 1.4rem;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border-right: 2px solid var(--primary);
+            border-bottom: 2px solid var(--primary);
+            pointer-events: none;
+            transition: var(--transition);
+            transform-origin: center;
+            rotate: 45deg;
+            margin-top: -3px;
+        }
+
+        .select-wrapper:focus-within::after {
+            rotate: -135deg;
+            margin-top: 3px;
+        }
+
+        select.form-control option {
+            background-color: var(--bg-accent);
+            color: var(--text-main);
+            padding: 10px;
+        }
+
+        /* Floating Label Logic */
+        .form-control:focus ~ .form-label,
+        .form-control:not(:placeholder-shown) ~ .form-label,
+        select.form-control ~ .form-label {
+            top: 0.3rem;
+            font-size: 0.75rem;
+            color: var(--primary-light);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.15);
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1.1rem;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition)w;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.6rem;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+         }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            z-index: -1;
+            transition: opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.547);
+        }
+        
+        .btn-primary:hover::before { opacity: 1; }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:active { transform: translateY(1px); }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 600ms linear;
+            background-color: rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* Result Section (Upgraded SVG Circle) */
+        .result-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .result-wrapper.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .result-header { text-align: center; }
+        .result-header h2 { font-size: 1.6rem; color: var(--primary-light); font-weight: 600; }
+
+        .progress-circle-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-circle {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .progress-bg {
+            fill: none;
+            stroke: var(--bg-accent);
+            stroke-width: 12;
+        }
+
+        .progress-bar {
+            fill: none;
+            stroke: url(#gradient);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 565.48; /* 2 * pi * 90 */
+            stroke-dashoffset: 565.48;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 8px var(--primary));
+        }
+
+        .percentage-text {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .percentage-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(180deg, #fff, #dcdde1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Particle Confetti (CSS Only setup via JS) */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        /* Result Details */
+        .result-details {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+        }
+        
+        .detail-row:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .detail-label { color: var(--text-muted); font-size: 0.95rem; }
+        .detail-value { font-weight: 600; font-size: 1.05rem; }
+        .detail-formula {
+            font-family: 'Courier New', Courier, monospace;
+            background: rgba(162, 155, 254, 0.15);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            color: var(--primary-light);
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover { background: rgba(162, 155, 254, 0.15); border-color: var(--primary); color: var(--primary-light); }
+
+        /* Information Section Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+        }
+
+        .info-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.1); }
+        .info-card h3 { color: var(--primary); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+
+        .example-box {
+            background: linear-gradient(90deg, rgba(162,155,254,0.1) 0%, rgba(0,0,0,0.1) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .example-code {
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: rgba(255, 118, 117, 0.08);
+            border: 1px solid rgba(255, 118, 117, 0.2);
+            padding: 1.2rem;
+            border-radius: 12px;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            color: #ffb8b8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Modern Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 9999;
+        }
+
+        .toast {
+            min-width: 300px;
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--error); }
+        
+        .toast i { font-size: 1.2rem; }
+        .toast.success i { color: var(--success); }
+        .toast.error i { color: var(--error); }
+
+        .toast.fade-out {
+            animation: slideOut 0.4s ease forwards;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            to { transform: translateX(120%); opacity: 0; }
+        }
+
+        @keyframes particleBurst {
+            0% { transform: translate(0,0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
+
+        /* Utilities */
+        .hidden { display: none !important; }
+        .d-none { opacity: 0; pointer-events: none; position: absolute; }
+
+
+
+
+        .footer{
+    background:black;
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:45px 7% 18px;
+    position:relative;
+    width: 100%;
+}
+
+.footer::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:2px;
+    background:linear-gradient(90deg,#ff9800,#ff5722,#ff9800);
+}
+
+.footer-container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.footer-logo h2{
+    color:#fff;
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.footer-logo p{
+    color:#aaa;
+    font-size:15px;
+}
+
+.footer-links{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+}
+
+.footer-links a{
+    color:#cfcfcf;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.footer-links a:hover{
+    color:#ff9800;
+}
+
+.footer-social{
+    display:flex;
+    gap:15px;
+}
+
+.footer-social a{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#1b1f2c;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:.3s;
+}
+
+.footer-social a:hover{
+    background:#ff9800;
+    transform:translateY(-5px);
+}
+
+.footer-bottom{
+    margin-top:28px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.08);
+    text-align:center;
+    color:#888;
+    font-size:14px;
+}
+
+/* Back To Top */
+
+#topBtn{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:50%;
+    background:#ff9800;
+    color:#fff;
+    font-size:18px;
+    cursor:pointer;
+    display:none;
+    z-index:999;
+    transition:.3s;
+}
+
+#topBtn:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 20px rgba(255,152,0,.5);
+}
+
+#topBtn.show{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+@media(max-width:768px){
+
+.footer-container{
+flex-direction:column;
+text-align:center;
+}
+
+.footer-links{
+justify-content:center;
+}
+
+}
+
+
+
+
+/* Run Bar */
+.run-bar {
+    width: 100%;
+    overflow: hidden;
+    background: black;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.run-bar p {
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 500;
+    padding-left: 100%;
+    animation: scrollText 15s linear infinite;
+    letter-spacing: 1px;
+}
+@keyframes scrollText {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-200%);
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="container">
+        
+        <header>
+            <h1>CGPA / SPI to <span class="text-gradient">Percentage</span></h1>
+            <p class="subtitle">Premium calculator designed to instantly convert your academic scores using your University's official conversion formula.</p>
+        </header>
+
+        <main class="dashboard-grid">
+            
+            <section class="glass-card tilt-card" aria-label="Input Form">
+                
+                <div class="form-group select-wrapper">
+                    <select id="universitySelect" class="form-control" aria-label="Select University">
+                        <option value="silver_oak">Silver Oak University</option>
+                        <option value="gujarat">Gujarat University</option>
+                        <option value="gls">GLS University</option>
+                        <option value="lj">L.J. University</option>
+                        <option value="gseb">GSEB (Higher Secondary)</option>
+                    </select>
+                    <label class="form-label" for="universitySelect">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                        University
+                    </label>
+                </div>
+
+                <div class="form-group select-wrapper" id="typeGroup">
+                    <select id="typeSelect" class="form-control" aria-label="Calculation Type">
+                        <option value="CGPA">CGPA (Cumulative)</option>
+                        <option value="SPI">SPI / SGPA (Semester)</option>
+                    </select>
+                    <label class="form-label" for="typeSelect">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                        Score Type
+                    </label>
+                </div>
+
+                <div class="form-group" id="cgpaGroup">
+                    <input type="number" id="cgpaInput" class="form-control" placeholder=" " step="0.01" min="0" max="10">
+                    <label class="form-label" id="valueLabel" for="cgpaInput">Enter Score (0 - 10)</label>
+                </div>
+
+                <div class="d-none" id="marksGroup">
+                    <div class="form-group">
+                        <input type="number" id="obtainedMarks" class="form-control" placeholder=" " min="0">
+                        <label class="form-label" for="obtainedMarks">Obtained Marks</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="totalMarks" class="form-control" placeholder=" " min="1">
+                        <label class="form-label" for="totalMarks">Total Marks</label>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-ripple" id="resetBtn" aria-label="Reset Calculator">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg>
+                        Reset
+                    </button>
+                    <button class="btn btn-primary btn-ripple" id="calculateBtn" aria-label="Calculate Percentage">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Calculate
+                    </button>
+                </div>
+            </section>
+
+            <section class="glass-card tilt-card" aria-live="polite">
+                <div class="result-wrapper" id="resultWrapper">
+                    
+                    <div class="result-header">
+                        <h2>Result Analysis</h2>
+                    </div>
+                    
+                    <div class="progress-circle-container" id="circleContainer">
+                        <svg class="progress-circle" viewBox="0 0 200 200">
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#a29bfe" />
+                                    <stop offset="100%" stop-color="#fd79a8" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="progress-bg" cx="100" cy="100" r="90"></circle>
+                            <circle class="progress-bar" id="progressBar" cx="100" cy="100" r="90"></circle>
+                        </svg>
+                        <div class="percentage-text">
+                            <span class="percentage-value" id="percentValue">0.00%</span>
+                        </div>
+                    </div>
+
+                    <div class="result-details" id="printArea">
+                        <div class="detail-row">
+                            <span class="detail-label">University</span>
+                            <span class="detail-value" id="resUniversity">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label" id="resValueLabel">Input Score</span>
+                            <span class="detail-value" id="resValue">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Formula Applied</span>
+                            <span class="detail-formula" id="resFormula">-</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn btn-ripple" id="copyBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Copy Details
+                        </button>
+                        <button class="action-btn btn-ripple" id="printBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                            Print Report
+                        </button>
+                    </div>
+
+                </div>
+                
+                <div id="emptyState" style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.5; gap: 1rem; text-align: center;">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4"><circle cx="12" cy="12" r="10"></circle></svg>
+                    <p>Enter your details and click calculate<br>to view your detailed result analysis.</p>
+                </div>
+            </section>
+        </main>
+
+        <section class="glass-card" style="width: 100%; padding: 2rem;">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg> CGPA</h3>
+                    <p>Cumulative Grade Point Average. It measures your overall academic performance across all completed semesters in the program.</p>
+                </div>
+                <div class="info-card">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> SPI / SGPA</h3>
+                    <p>Semester Percentage Index. This indicates your academic performance specifically for a single, individual semester.</p>
+                </div>
+                <div class="info-card">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Percentage</h3>
+                    <p>Standard out-of-100 metric. Required for placements, further education, and competitive exams.</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div>
+                    <strong style="color: var(--text-main); font-size: 1.2rem;">Standard 10-Point Scale Example</strong><br>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">How the formula works internally</span>
+                </div>
+                <div class="example-code">
+                    Score: <span style="color: #55efc4;">8.45</span> &times; 10 &nbsp;=&nbsp; <span style="color: var(--primary-light); font-weight: bold;">84.50%</span>
+                </div>
+            </div>
+        </section>
+
+
+
+    </div>
+
+    <div class="toast-container" id="toastContainer" aria-live="assertive"></div>
+
+
+
+    
+       <footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-logo">
+            <h2>BookhuB</h2>
+            <p>Free Notes • Resources • Student Tools</p>
+        </div>
+
+        <div class="footer-links">
+            <a href="./Meet-the-Maker.html">Meet the Maker</a>
+            <a href="./feedback.html">Feedback</a>
+        
+            <a href="./cgpa.html">CGPA</a>
+        </div>
+
+        <div class="footer-social">
+            <a href="https://www.linkedin.com/in/rehankhan-pathan-153113339?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/Rehan947"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/iampathan.0?igsh=aXM2MGczbmh2MGJy"><i class="fab fa-instagram"></i></a>
+            
+            
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2025 <b>BookhuB</b> • Made with ❤️ by Rehan
+    </div>
+
+</footer>
+
+<button id="topBtn">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+
+<div class="run-bar">
+  <p>Thank you for visiting. We appreciate your support.</p>
+</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // UI Elements
+            const univSelect = document.getElementById('universitySelect');
+            const typeSelect = document.getElementById('typeSelect');
+            const typeGroup = document.getElementById('typeGroup');
+            const cgpaGroup = document.getElementById('cgpaGroup');
+            const marksGroup = document.getElementById('marksGroup');
+            const cgpaInput = document.getElementById('cgpaInput');
+            const valueLabel = document.getElementById('valueLabel');
+            const obtInput = document.getElementById('obtainedMarks');
+            const totInput = document.getElementById('totalMarks');
+            
+            // Buttons
+            const calcBtn = document.getElementById('calculateBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const printBtn = document.getElementById('printBtn');
+            
+            // Result Elements
+            const resultWrapper = document.getElementById('resultWrapper');
+            const emptyState = document.getElementById('emptyState');
+            const progressBar = document.getElementById('progressBar');
+            const percentValue = document.getElementById('percentValue');
+            const resUniversity = document.getElementById('resUniversity');
+            const resValueLabel = document.getElementById('resValueLabel');
+            const resValue = document.getElementById('resValue');
+            const resFormula = document.getElementById('resFormula');
+            const circleContainer = document.getElementById('circleContainer');
+
+            // Constants
+            const CIRCUMFERENCE = 2 * Math.PI * 90; // r=90
+            let isLive = false;
+
+            // Database
+            const db = {
+                silver_oak: { name: "Silver Oak University", formulaStr: "Score × 10", calc: (v) => v * 10 },
+                gujarat: { name: "Gujarat University", formulaStr: "Score × 10", calc: (v) => v * 10 },
+                gls: { name: "GLS University", formulaStr: "Score × 10", calc: (v) => v * 10 },
+                lj: { name: "L.J. University", formulaStr: "Score × 10", calc: (v) => v * 10 },
+                gseb: { name: "GSEB (Higher Secondary)", formulaStr: "(Obtained ÷ Total) × 100", calc: (o, t) => (o / t) * 100 }
+            };
+
+            // Setup Circle
+            progressBar.style.strokeDasharray = CIRCUMFERENCE;
+            progressBar.style.strokeDashoffset = CIRCUMFERENCE;
+
+            // Events
+            univSelect.addEventListener('change', handleModeSwitch);
+            typeSelect.addEventListener('change', () => {
+                const type = typeSelect.value;
+                valueLabel.innerText = `Enter ${type} (0 - 10)`;
+                if(isLive) processCalculation(true);
+            });
+
+            calcBtn.addEventListener('click', () => processCalculation(false));
+            resetBtn.addEventListener('click', resetUI);
+            copyBtn.addEventListener('click', copyToClipboard);
+            printBtn.addEventListener('click', () => window.print());
+            
+            // Enter key support
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter') processCalculation(false);
+            });
+
+            // Live Calc triggers
+            [cgpaInput, obtInput, totInput].forEach(inp => {
+                inp.addEventListener('input', () => {
+                    if(isLive) processCalculation(true);
+                });
+            });
+
+            function handleModeSwitch() {
+                const isGseb = univSelect.value === 'gseb';
+                if (isGseb) {
+                    typeGroup.classList.add('d-none');
+                    cgpaGroup.classList.add('d-none');
+                    marksGroup.classList.remove('d-none');
+                    marksGroup.style.position = 'relative';
+                    marksGroup.style.opacity = '1';
+                    marksGroup.style.pointerEvents = 'all';
+                } else {
+                    typeGroup.classList.remove('d-none');
+                    cgpaGroup.classList.remove('d-none');
+                    marksGroup.classList.add('d-none');
+                    marksGroup.style.position = 'absolute';
+                }
+                if(isLive) processCalculation(true);
+            }
+
+            function processCalculation(silent = false) {
+                const uKey = univSelect.value;
+                const conf = db[uKey];
+                let percentage = 0;
+                let displayVal = '';
+                let displayLbl = '';
+
+                if (uKey !== 'gseb') {
+                    const val = parseFloat(cgpaInput.value);
+                    if (isNaN(val) || cgpaInput.value.trim() === '') return showErr("Please enter a valid number.", silent);
+                    if (val < 0) return showErr("Score cannot be negative.", silent);
+                    if (val > 10) return showErr("Maximum score is 10.", silent);
+                    
+                    percentage = conf.calc(val);
+                    displayVal = val.toFixed(2);
+                    displayLbl = `${typeSelect.value} Entered`;
+                } else {
+                    const obt = parseFloat(obtInput.value);
+                    const tot = parseFloat(totInput.value);
+                    
+                    if (isNaN(obt) || isNaN(tot) || obtInput.value === '' || totInput.value === '') return showErr("Please enter valid marks.", silent);
+                    if (obt < 0 || tot <= 0) return showErr("Marks must be positive.", silent);
+                    if (obt > tot) return showErr("Obtained cannot exceed Total Marks.", silent);
+
+                    percentage = conf.calc(obt, tot);
+                    displayVal = `${obt} / ${tot}`;
+                    displayLbl = "Marks Entered";
+                }
+
+                percentage = Math.min(Math.max(percentage, 0), 100);
+                
+                renderResult(conf.name, displayLbl, displayVal, conf.formulaStr, percentage, silent);
+                isLive = true;
+            }
+
+            function renderResult(uname, lbl, val, form, pct, silent) {
+                emptyState.style.display = 'none';
+                resultWrapper.classList.add('active');
+
+                resUniversity.innerText = uname;
+                resValueLabel.innerText = lbl;
+                resValue.innerText = val;
+                resFormula.innerText = form;
+
+                // Animate SVG
+                const offset = CIRCUMFERENCE - (pct / 100) * CIRCUMFERENCE;
+                progressBar.style.strokeDashoffset = offset;
+
+                // Color tint logic based on score
+                let startColor = '#a29bfe';
+                let endColor = '#fd79a8';
+                if(pct >= 90) { startColor = '#55efc4'; endColor = '#00b894'; }
+                else if(pct < 35) { startColor = '#ff7675'; endColor = '#d63031'; }
+                
+                document.getElementById('gradient').innerHTML = `
+                    <stop offset="0%" stop-color="${startColor}" />
+                    <stop offset="100%" stop-color="${endColor}" />
+                `;
+
+                if (!silent) {
+                    animateValue(percentValue, 0, pct, 1200);
+                    createConfetti();
+                    showToast("Calculation successful!", "success");
+                } else {
+                    percentValue.innerText = pct.toFixed(2) + "%";
+                }
+            }
+
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    // easeOutExpo
+                    const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                    obj.innerHTML = (start + (end - start) * ease).toFixed(2) + "%";
+                    if (progress < 1) window.requestAnimationFrame(step);
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            function resetUI() {
+                cgpaInput.value = '';
+                obtInput.value = '';
+                totInput.value = '';
+                isLive = false;
+                resultWrapper.classList.remove('active');
+                setTimeout(() => {
+                    emptyState.style.display = 'flex';
+                    progressBar.style.strokeDashoffset = CIRCUMFERENCE;
+                    percentValue.innerText = "0.00%";
+                }, 400);
+            }
+
+            function showErr(msg, silent) {
+                if(!silent) showToast(msg, "error");
+            }
+
+            // Toast System
+            function showToast(message, type) {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                const icon = type === 'success' 
+                    ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+                    : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+
+                toast.innerHTML = `${icon} <span>${message}</span>`;
+                container.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.classList.add('fade-out');
+                    toast.addEventListener('animationend', () => toast.remove());
+                }, 3500);
+            }
+
+            function copyToClipboard() {
+                const text = `Academic Percentage Record\n------------------------\nInstitution: ${resUniversity.innerText}\n${resValueLabel.innerText}: ${resValue.innerText}\nFinal Percentage: ${percentValue.innerText}\nCalculation Rule: ${resFormula.innerText}\n\nGenerated via BookhuB Calculator`;
+                navigator.clipboard.writeText(text)
+                    .then(() => showToast("Copied to clipboard!", "success"))
+                    .catch(() => showToast("Failed to copy", "error"));
+            }
+
+            // Button Ripples
+            document.querySelectorAll('.btn-ripple').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const d = Math.max(rect.width, rect.height);
+                    const circle = document.createElement('span');
+                    circle.style.width = circle.style.height = `${d}px`;
+                    circle.style.left = `${e.clientX - rect.left - d/2}px`;
+                    circle.style.top = `${e.clientY - rect.top - d/2}px`;
+                    circle.classList.add('ripple');
+                    
+                    const existing = this.querySelector('.ripple');
+                    if(existing) existing.remove();
+                    this.appendChild(circle);
+                });
+            });
+
+            // 3D Tilt Effect on Desktop
+            if (window.matchMedia("(hover: hover)").matches) {
+                document.querySelectorAll('.tilt-card').forEach(card => {
+                    card.addEventListener('mousemove', e => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = ((y - centerY) / centerY) * -5;
+                        const rotateY = ((x - centerX) / centerX) * 5;
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0)`;
+                        setTimeout(() => card.style.transition = 'var(--transition)', 300);
+                    });
+                    card.addEventListener('mouseenter', () => {
+                        card.style.transition = 'none';
+                    });
+                });
+            }
+
+            // Confetti System
+            function createConfetti() {
+                for(let i=0; i<30; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    
+                    // Random colors matching theme
+                    const colors = ['#a29bfe', '#fd79a8', '#55efc4', '#ffeaa7'];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    circleContainer.appendChild(particle);
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 50 + Math.random() * 100;
+                    const tx = Math.cos(angle) * velocity;
+                    const ty = Math.sin(angle) * velocity;
+                    
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    particle.style.left = '50%';
+                    particle.style.top = '50%';
+                    
+                    particle.style.animation = `particleBurst ${0.5 + Math.random()*0.5}s ease-out forwards`;
+                    
+                    setTimeout(() => particle.remove(), 1000);
+                }
+            }
+        });
+    </script>
+
+    <script>
+    const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll", () => {
+    if(window.scrollY > 300){
+        topBtn.classList.add("show");
+    }else{
+        topBtn.classList.remove("show");
+    }
+});
+
+topBtn.onclick = () =>{
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+};
+</script>
+<script>
+    
+</script>
+</body>
+</html>

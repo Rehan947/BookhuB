@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#a29bfe">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback Form</title>
+    <link rel="icon" href="favicon_BB.jpeg" type="image/jpeg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ================= BASIC RESET ================= */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body { min-height: 100vh; background: linear-gradient(135deg, #1f1c2c, #928dab); display: flex; align-items: center; justify-content: center; overflow: hidden; color: white; transition: .3s; }
+body.dark { background: linear-gradient(135deg, #08060a, #2b2a36); color: #eee; }
+
+/* ================= STARS BACKGROUND ================= */
+#stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: white; opacity: .8; animation: twinkle 3s infinite; }
+@keyframes twinkle { 0% { opacity: .2; transform: scale(1) } 50% { opacity: 1; transform: scale(1.8) } 100% { opacity: .2; transform: scale(1) } }
+
+/* ================= TOGGLE DARK MODE ================= */
+#toggleMode { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer; background: rgba(255, 255, 255, .2); color: white; font-size: 20px; backdrop-filter: blur(6px); z-index: 10; transition: .3s; }
+#toggleMode:hover { transform: scale(1.1); }
+
+/* ================= BACK BUTTON ================= */
+.back-btn { position: fixed; top: 20px; left: 20px; font-size: 20px; color: white; z-index: 10; transition: .3s; }
+.back-btn:hover { transform: scale(1.1); }
+
+/* ================= FORM CONTAINER ================= */
+.container {
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  z-index: 2;
+  background: rgba(255, 255, 255, .1);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, .3);
+  box-shadow: 0 0 40px rgba(0, 0, 0, .4);
+}
+
+h2 { text-align: center; margin-bottom: 20px; font-size: 22px; }
+
+/* ================= INPUT FIELDS ================= */
+.input-box { position: relative; margin-bottom: 20px; }
+.input-box input, .input-box textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, .15);
+  color: white;
+  outline: none;
+  resize: none;
+}
+.input-box textarea { height: 100px; }
+
+body.dark .input-box input, body.dark .input-box textarea { background: rgba(255, 255, 255, .05); }
+
+.input-box label {
+  position: absolute; top: 50%; left: 12px; transform: translateY(-50%);
+  pointer-events: none; color: #ddd; font-size: 13px; transition: .3s;
+}
+
+/* Fix Label for Textarea */
+.textarea-box label { top: 20px; transform: translateY(0); }
+
+/* Floating Label Animation */
+.input-box input:focus + label, .input-box input:valid + label,
+.input-box textarea:focus + label, .input-box textarea:valid + label {
+  top: -8px; font-size: 11px; color: #10f7ff; transform: translateY(0);
+}
+
+/* ================= RATING STARS ================= */
+.stars { display: flex; justify-content: center; gap: 10px; font-size: 26px; margin: 10px 0; }
+.stars i { color: #555; cursor: pointer; transition: .2s; }
+.stars i.active { color: gold; transform: scale(1.2); }
+.rating-text { text-align: center; margin-bottom: 15px; font-size: 14px; font-weight: bold; }
+
+/* ================= CHARACTER COUNTER ================= */
+.counter { text-align: right; font-size: 12px; opacity: .8; margin-bottom: 15px; }
+
+/* ================= SUBMIT BUTTON ================= */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(45deg, #00f5ff, #ff00d4);
+  color: white; font-weight: bold; font-size: 16px;
+  cursor: pointer;
+  transition: .3s;
+}
+.submit-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0, 245, 255, 0.5); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ================= SUCCESS MESSAGE ================= */
+.success { display: none; margin-top: 15px; text-align: center; padding: 10px; border-radius: 10px; background: #13c13a; font-weight: bold; }
+
+/* HONEYPOT HIDDEN CLASS */
+.visually-hidden { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+/* ================= RESPONSIVE ================= */
+@media(max-width: 400px) {
+  .container { padding: 20px; }
+  #toggleMode { width: 40px; height: 40px; }
+}
+</style>
+</head>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('./sw.js')
+      .catch(err => console.error('SW registration failed:', err));
+  });
+}
+</script>
+<body>
+
+<button id="toggleMode"><i id="modeIcon" class="fa-solid fa-moon"></i></button>
+
+<div id="stars"></div>
+
+<div class="container">
+  <h2>Share Your Feedback</h2>
+
+  <form id="feedbackForm">
+    <input type="text" id="website_url" name="website_url" class="visually-hidden" autocomplete="off" tabindex="-1">
+
+    <div class="input-box">
+      <input type="text" name="name" required>
+      <label>Your Name</label>
+    </div>
+    <div class="input-box">
+      <input type="email" name="email" required>
+      <label>Your Email</label>
+    </div>
+    <div class="stars">
+      <i class="fa-solid fa-star" data-val="1"></i>
+      <i class="fa-solid fa-star" data-val="2"></i>
+      <i class="fa-solid fa-star" data-val="3"></i>
+      <i class="fa-solid fa-star" data-val="4"></i>
+      <i class="fa-solid fa-star" data-val="5"></i>
+    </div>
+    <div class="rating-text" id="rateText">Select Rating</div>
+    
+    <div class="input-box textarea-box">
+      <textarea name="message" maxlength="200" required></textarea>
+      <label>Your Feedback</label>
+    </div>
+    <div class="counter" id="count">0 / 200</div>
+    <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+  </form>
+
+  <div class="success" id="successMsg">✅ Feedback Sent Successfully!</div>
+</div>
+
+<script>
+/* STARS BACKGROUND */
+const box = document.getElementById("stars");
+for(let i=0; i<70; i++){
+  let s = document.createElement("div");
+  s.className = "star";
+  s.style.left = Math.random() * 100 + "%";
+  s.style.top = Math.random() * 100 + "%";
+  s.style.animationDelay = Math.random() * 3 + "s";
+  box.appendChild(s);
+}
+
+/* RATING STARS */
+let rating = 0;
+document.querySelectorAll(".stars i").forEach((star, i) => {
+  star.onclick = () => {
+    rating = i + 1;
+    document.querySelectorAll(".stars i").forEach(s => s.classList.remove("active"));
+    for(let j=0; j<=i; j++) document.querySelectorAll(".stars i")[j].classList.add("active");
+    document.getElementById("rateText").innerText = ["Poor 😞", "Okay 🙂", "Good 😄", "Great 🤩", "Excellent 🔥"][i];
+  };
+});
+
+/* CHARACTER COUNTER */
+const msg = document.querySelector("textarea");
+const count = document.getElementById("count");
+msg.oninput = () => count.innerText = `${msg.value.length} / 200`;
+
+/* DARK MODE TOGGLE */
+const toggleMode = document.getElementById("toggleMode");
+const modeIcon = document.getElementById("modeIcon");
+toggleMode.onclick = () => {
+  document.body.classList.toggle("dark");
+  modeIcon.classList.toggle("fa-moon");
+  modeIcon.classList.toggle("fa-sun");
+};
+
+/* =========================================================
+   NEW BACKEND CONNECTION LOGIC
+========================================================= */
+
+// YAHAN APNA DEPLOYMENT LINK PASTE KAREIN:
+const scriptURL = "https://script.google.com/macros/s/AKfycbx0tIhx_S5tKk1jnQAYXkdVPybuiQVHYjeghu4nTsBYin-7xY4PS0v6ddN-um_K54HX/exec"; 
+
+const successMsg = document.getElementById("successMsg");
+const submitBtn = document.getElementById("submitBtn");
+
+// Helper functions for device details
+function getBrowserInfo(ua) {
+    if (ua.includes("Firefox")) return "Firefox";
+    if (ua.includes("Edg")) return "Edge";
+    if (ua.includes("Chrome")) return "Chrome";
+    if (ua.includes("Safari")) return "Safari";
+    return "Other";
+}
+
+function getOSInfo(ua) {
+    if (ua.includes("Win")) return "Windows";
+    if (ua.includes("Mac")) return "MacOS";
+    if (ua.includes("X11") || ua.includes("Linux")) return "Linux";
+    if (ua.includes("Android")) return "Android";
+    if (ua.includes("like Mac")) return "iOS";
+    return "Other";
+}
+
+function getDeviceType(ua) {
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "Tablet";
+    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return "Mobile";
+    return "Desktop";
+}
+
+async function getLocationData() {
+    try {
+        const response = await fetch('https://ipapi.co/json/');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        return { ip: data.ip || "Unknown", country: data.country_name || "Unknown" };
+    } catch (error) {
+        return { ip: "Unknown", country: "Unknown" };
+    }
+}
+
+document.getElementById("feedbackForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  // Spam check (Honeypot)
+  if (document.getElementById("website_url").value !== "") return;
+
+  if(rating === 0){
+      alert("Please select rating ⭐");
+      return;
+  }
+  
+  submitBtn.innerText = "Submitting...";
+  submitBtn.disabled = true;
+
+  try {
+    const locationData = await getLocationData();
+    const ua = navigator.userAgent;
+
+    // Data package format for Apps Script
+    const payload = {
+        name: document.querySelector('input[name="name"]').value,
+        email: document.querySelector('input[name="email"]').value,
+        rating: rating,
+        message: document.querySelector('textarea[name="message"]').value,
+        ip: locationData.ip,
+        country: locationData.country,
+        browser: getBrowserInfo(ua),
+        os: getOSInfo(ua),
+        device: getDeviceType(ua),
+        userAgent: ua,
+        referrer: document.referrer || "Direct"
+    };
+
+    // Sending data via text/plain to avoid CORS issues
+    const response = await fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+        successMsg.innerText = "✅ Feedback Sent Successfully!";
+        successMsg.style.background = "#13c13a";
+        successMsg.style.display = "block";
+        setTimeout(() => successMsg.style.display = "none", 3000);
+        
+        // Reset Form
+        e.target.reset();
+        rating = 0;
+        document.querySelectorAll(".stars i").forEach(s => s.classList.remove("active"));
+        document.getElementById("rateText").innerText = "Select Rating";
+        document.getElementById("count").innerText = "0 / 200";
+    } else {
+        throw new Error("Server returned an error");
+    }
+
+  } catch(err) {
+    successMsg.innerText = "❌ Submission failed. Try again.";
+    successMsg.style.background = "#e74c3c"; // Red color for error
+    successMsg.style.display = "block";
+    setTimeout(() => successMsg.style.display = "none", 4000);
+  } finally {
+    submitBtn.innerText = "Submit";
+    submitBtn.disabled = false;
+  }
+});
+</script>
+
+</body>
+</html>

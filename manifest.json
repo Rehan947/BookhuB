@@ -1,0 +1,25 @@
+{
+  "name": "BookhuB",
+  "short_name": "BookhuB",
+  "description": "Your centralized hub for Language notes.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1f1c2c",
+  "theme_color": "#a29bfe",
+
+  "icons": [
+    {
+      "src": "icons/BB192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/BB512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

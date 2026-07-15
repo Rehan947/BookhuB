@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BookhuB</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#a29bfe">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon_BB.jpeg" type="image/jpeg">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('./sw.js')
+      .catch(err => console.error('SW registration failed:', err));
+  });
+}
+</script>
+
+<body>
+
+<header>
+  <button id="menuBtn" aria-label="Open Menu">≡</button>
+  <h2 class="note">BookhuB</h2>
+  <div>
+    
+    <a href="feedback.html" class="hlink" data-tooltip="Feedback">
+      <i class="fa-solid fa-comments"></i>
+    </a>
+  </div>
+</header>
+
+<div class="sidebar" id="sidebar">
+  <button id="closeMenuBtn" class="close-menu" aria-label="Close Menu">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+
+  
+
+  <a href="cgpa.html">Calculation </a>
+  <a href="know..html">Know More</a>
+  <a href="feedback.html">Feedback</a>
+</div>
+
+<section class="header1">
+  <div class="hero">
+    <div class="ball red" id="redBall" data-msg="Unlock your academic potential with premium study materials.">
+      <i class="fa-solid fa-book-open-reader animated-icon"></i>
+      <div class="msg"></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="close-hint">Click outside or press Esc to close</div>
+
+  <div class="shape shape2"></div>
+
+  <h2 class="w">Welcome to BookhuB</h2><br>
+  <p class="hero-main-text">A unique experience for students.</p>
+ <section class="quote-section">
+                <div class="container">
+                    <blockquote class="educational-quote">
+                        <i class="fas fa-quote-left quote-inline-icon"></i> Success demands sacrifice, patience, and faith.
+                        <cite>- Rehankhan</cite>
+                    </blockquote>
+                </div>
+            </section>
+  <div class="header-btns">
+    <button class="cta-btn" onclick="document.getElementById('down').scrollIntoView({behavior:'smooth'})">
+      Explore More
+    </button>
+    
+  </div>
+</section>
+
+<hr>
+
+
+
+
+
+
+
+
+<div id="down"></div>
+<div class="search-container">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="roadmap-search" placeholder="Search topics (e.g., React, Express)...">
+            </div>
+    <main class="roadmap-container" id="roadmap-container">
+        <!-- SVG Canvas for Dynamic Lines -->
+        <svg id="connection-lines"></svg>
+
+        <!-- Level 1 -->
+        <section class="level" id="level-1">
+            <div class="level-header">
+                <div class="level-node">
+                    <span class="level-icon">🌱</span>
+                    <h2>Level 1 – Programming Fundamentals</h2>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+            <div class="level-topics">
+                <a href="./Notes/Programming Fundamentals/HTML(HW).pdf"
+   download="HTML Notes.pdf"
+   class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">📄</span>
+                        <div class="status-indicator done"></div>
+                    </div>
+                    <h3 class="topic-title">HTML</h3>
+                    <span class="badge beginner">Beginner</span>
+                </a>
+                 <a href="./Notes/Programming Fundamentals/CSS.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🎨</span>
+                        <div class="status-indicator done"></div>
+                    </div>
+                    <h3 class="topic-title">CSS</h3>
+                    <span class="badge beginner">Beginner</span>
+                </a>
+                 <a href="./Notes/Programming Fundamentals/JavaScriptTutorial.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">⚡</span>
+                        <div class="status-indicator progress"></div>
+                    </div>
+                    <h3 class="topic-title">JavaScript</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+                 <a href="./Notes/Programming Fundamentals/Git and GitHub.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🐙</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Git & GitHub</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Level 2 -->
+        <section class="level" id="level-2">
+            <div class="level-header">
+                <div class="level-node">
+                    <span class="level-icon">🎨</span>
+                    <h2>Level 2 – Frontend Advanced</h2>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+            <div class="level-topics">
+                <a href="./Notes/Frontend Advanced/Frontend Advanced/tailwind-css.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🌊</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Tailwind CSS</h3>
+                    <span class="badge beginner">Beginner</span>
+                </a>
+                <a href="./Notes/Frontend Advanced/Frontend Advanced/BootStrap-5.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🟪</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Bootstrap</h3>
+                    <span class="badge beginner">Beginner</span>
+                </a>
+               <a href="./Notes/Frontend Advanced/Frontend Advanced/Advance Javascript.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🧠</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Advanced JavaScript</h3>
+                    <span class="badge advanced">Advanced</span>
+                </a>
+                <a href="./Notes/Frontend Advanced/Frontend Advanced/Responsive.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">📱</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Responsive Design</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Level 3 -->
+        <section class="level" id="level-3">
+            <div class="level-header">
+                <div class="level-node">
+                    <span class="level-icon">⚙️</span>
+                    <h2>Level 3 – Backend Development</h2>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+            <div class="level-topics">
+         <a href="./Notes/Backend Development/Backend Development/node js.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🟢</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Node.js</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+                <a href="./Notes/Backend Development/Backend Development/express.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🚂</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Express.js</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+                <a href="./Notes/Backend Development/Backend Development/MongoDB.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🍃</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">MongoDB</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+              <a href="./Notes/Backend Development/Backend Development/REST Basics.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🔌</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">REST APIs</h3>
+                    <span class="badge advanced">Advanced</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Level 4 -->
+        <section class="level" id="level-4">
+            <div class="level-header">
+                <div class="level-node">
+                    <span class="level-icon">⚛️</span>
+                    <h2>Level 4 – React Development</h2>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+            <div class="level-topics">
+                 <a href="./Notes/React Development/React Development/ReactJS.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">⚛️</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">React.js</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+                <a href="./Notes/React Development/React Development/nextjs.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">▲</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Next.js</h3>
+                    <span class="badge advanced">Advanced</span>
+                </a>
+                <a href="./Notes/React Development/React Development/Firebase.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🔥</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Firebase</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+                <a href="./Notes/React Development/React Development/Redux_Context AP.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">📦</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Redux / Context API</h3>
+                    <span class="badge advanced">Advanced</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Level 5 -->
+        <section class="level" id="level-5">
+            <div class="level-header">
+                <div class="level-node">
+                    <span class="level-icon">🤖</span>
+                    <h2>Level 5 – AI & Modern Dev</h2>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+            <div class="level-topics">
+                <a href="./Notes/AI & Modern Development/AI & Modern Development/PROMTING.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">💬</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Prompt Engineering</h3>
+                    <span class="badge beginner">Beginner</span>
+                </a>
+                <a href="./Notes/AI & Modern Development/AI & Modern Development/generative-ai.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">✨</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Generative AI</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+<a href="./Notes/AI & Modern Development/AI & Modern Development/ai-ready-apis.pdf"download="HTML Notes.pdf"class="topic-card">                    <div class="card-header">
+                        <span class="topic-icon">🧩</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">AI APIs</h3>
+                    <span class="badge advanced">Advanced</span>
+                </a>
+                <a href="./Notes/AI & Modern Development/AI & Modern Development/docker-tutorial.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🐳</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Docker & Cloud Basics</h3>
+                    <span class="badge advanced">Advanced</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Level 6 -->
+        <section class="level" id="level-6">
+            <div class="level-header">
+                <div class="level-node">
+                    <span class="level-icon">💼</span>
+                    <h2>Level 6 – Placement Prep</h2>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+            <div class="level-topics">
+                <a href="./Notes/Placement Preparation/Placement Preparation/50+ DSA.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">📚</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">DSA</h3>
+                    <span class="badge advanced">Advanced</span>
+                </a>
+                <a href="./Notes/Placement Preparation/Placement Preparation/Interview-Questions-and-Answers.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🎙️</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Interview Questions</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </a>
+                <a href="./Notes/Placement Preparation/Placement Preparation/resume-sample.pdf"download="HTML Notes.pdf"class="topic-card">
+                    
+                    <div class="card-header">
+                        <span class="topic-icon">📝</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Resume & LinkedIn</h3>
+                    <span class="badge beginner">Beginner</span>
+                </a>
+              <a href="./Notes/Placement Preparation/Placement Preparation/softskills.pdf"download="HTML Notes.pdf"class="topic-card">
+                    <div class="card-header">
+                        <span class="topic-icon">🤝</span>
+                        <div class="status-indicator todo"></div>
+                    </div>
+                    <h3 class="topic-title">Aptitude & Soft Skills</h3>
+                    <span class="badge beginner">Beginner</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-logo">
+            <h2>BookhuB</h2>
+            <p>Free Notes • Resources • Student Tools</p>
+        </div>
+
+        <div class="footer-links">
+            <a href="./Meet-the-Maker.html">Meet the Maker</a>
+            <a href="./feedback.html">Feedback</a>
+        
+            <a href="./cgpa.html">CGPA</a>
+        </div>
+
+        <div class="footer-social">
+            <a href="https://www.linkedin.com/in/rehankhan-pathan-153113339?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/Rehan947"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/iampathan.0?igsh=aXM2MGczbmh2MGJy"><i class="fab fa-instagram"></i></a>
+            
+            
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2025 <b>BookhuB</b> • Made with ❤️ by Rehan
+    </div>
+
+</footer>
+
+<button id="topBtn">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+
+
+
+<div class="run-bar">
+  <p>Thank you for visiting. We appreciate your support.</p>
+</div>
+
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    const svgCanvas = document.getElementById('connection-lines');
+    const container = document.getElementById('roadmap-container');
+    const levels = document.querySelectorAll('.level');
+    const searchInput = document.getElementById('roadmap-search');
+
+    // ==========================================
+    // 1. Dynamic SVG Line Drawing
+    // ==========================================
+    function drawLines() {
+        svgCanvas.innerHTML = ''; // Clear existing paths
+        
+        const containerRect = container.getBoundingClientRect();
+        const isMobile = window.innerWidth <= 768;
+
+        levels.forEach(level => {
+            // Skip drawing inside collapsed items on mobile to save performance
+            if (isMobile && level.classList.contains('collapsed')) return;
+
+            const headerNode = level.querySelector('.level-node');
+            const topics = level.querySelectorAll('.topic-card');
+            const hRect = headerNode.getBoundingClientRect();
+
+            // Calculate starting point (bottom center of level node on Desktop, bottom left on Mobile)
+            const startX = isMobile 
+                ? (hRect.left + 24) - containerRect.left 
+                : (hRect.left + hRect.width / 2) - containerRect.left;
+            
+            const startY = hRect.bottom - containerRect.top;
+
+            topics.forEach(topic => {
+                const tRect = topic.getBoundingClientRect();
+                
+                // Calculate ending point (left center on Mobile, top center on Desktop)
+                const endX = isMobile
+                    ? tRect.left - containerRect.left
+                    : (tRect.left + tRect.width / 2) - containerRect.left;
+                
+                const endY = isMobile
+                    ? (tRect.top + tRect.height / 2) - containerRect.top
+                    : tRect.top - containerRect.top;
+
+                // Create curved Bezier Path
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                let dPath = '';
+
+                if (isMobile) {
+                    // Mobile: 'L' shape curve from left indent
+                    dPath = `M ${startX} ${startY} L ${startX} ${endY - 12} Q ${startX} ${endY} ${startX + 12} ${endY} L ${endX} ${endY}`;
+                } else {
+                    // Desktop: Smooth 'S' curve top-to-bottom
+                    const cpY = startY + (endY - startY) * 0.5;
+                    dPath = `M ${startX} ${startY} C ${startX} ${cpY}, ${endX} ${cpY}, ${endX} ${endY}`;
+                }
+
+                path.setAttribute('d', dPath);
+                path.setAttribute('class', 'connector-line');
+                svgCanvas.appendChild(path);
+            });
+        });
+    }
+
+    // High performance resize handling
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        cancelAnimationFrame(resizeTimeout);
+        resizeTimeout = requestAnimationFrame(drawLines);
+    });
+
+    // ==========================================
+    // 2. Mobile Accordion Logic
+    // ==========================================
+    levels.forEach(level => {
+        // Default collapse on Mobile, Open on Desktop
+        if (window.innerWidth <= 768) {
+            level.classList.add('collapsed');
+        }
+
+        const header = level.querySelector('.level-node');
+        header.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                level.classList.toggle('collapsed');
+                
+                // Animate lines smoothly during CSS transition
+                let start = performance.now();
+                requestAnimationFrame(function animatePath(time) {
+                    drawLines();
+                    if (time - start < 500) { // 500ms matches CSS transition
+                        requestAnimationFrame(animatePath);
+                    }
+                });
+            }
+        });
+    });
+
+    // ==========================================
+    // 3. Search & Filtering
+    // ==========================================
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        
+        document.querySelectorAll('.topic-card').forEach(card => {
+            const title = card.querySelector('.topic-title').innerText.toLowerCase();
+            if (title.includes(query) || query === '') {
+                card.classList.remove('dimmed');
+                if (query !== '') card.classList.add('highlight');
+            } else {
+                card.classList.add('dimmed');
+                card.classList.remove('highlight');
+            }
+        });
+
+        // Remove highlight border shortly after typing stops for a clean pulse effect
+        clearTimeout(window.searchHighlightTimeout);
+        window.searchHighlightTimeout = setTimeout(() => {
+            document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('highlight'));
+        }, 800);
+    });
+
+    // ==========================================
+    // 4. Premium Ripple Interaction
+    // ==========================================
+    document.querySelectorAll('.topic-card').forEach(card => {
+        card.addEventListener('mousedown', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+
+            // Make ripple cover the whole card dynamically
+            const diameter = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${diameter}px`;
+            ripple.style.marginLeft = ripple.style.marginTop = `${-diameter / 2}px`;
+
+            this.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        // Prevent default jump for placeholder links but maintain interaction
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+            // In a real app, this would push state or use window.location
+            console.log(`Navigating to: ${card.getAttribute('href')}`);
+        });
+    });
+
+    // Initial render
+    // Small delay to ensure CSS styles (fonts, grids) are fully applied before calculating SVG coordinates
+    setTimeout(drawLines, 100); 
+});
+
+// ==========================================
+// 4. Premium Ripple Interaction + PDF Download
+// ==========================================
+document.querySelectorAll('.topic-card').forEach(card => {
+
+    // Ripple Effect
+    card.addEventListener('mousedown', function (e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+
+        const diameter = Math.max(rect.width, rect.height);
+        ripple.style.width = `${diameter}px`;
+        ripple.style.height = `${diameter}px`;
+        ripple.style.marginLeft = `${-diameter / 2}px`;
+        ripple.style.marginTop = `${-diameter / 2}px`;
+
+        this.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 600);
+    });
+
+    // PDF Download / Normal Navigation
+    card.addEventListener('click', function (e) {
+
+        const href = this.getAttribute('href');
+
+        // Agar PDF hai to download
+        if (href && href.toLowerCase().endsWith('.pdf')) {
+
+            e.preventDefault();
+
+            const link = document.createElement('a');
+            link.href = href;
+            link.download = '';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+        }
+
+        // HTML ya dusra page hai to browser normal open karega
+    });
+
+});
+</script>
+
+<script>
+    const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll", () => {
+    if(window.scrollY > 300){
+        topBtn.classList.add("show");
+    }else{
+        topBtn.classList.remove("show");
+    }
+});
+
+topBtn.onclick = () =>{
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+};
+</script>
+     
+    <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./SW.js")
+      .then(reg => console.log("Service Worker Registered"))
+      .catch(err => console.log(err));
+  });
+}
+</script>
+
+
+</body>
+</html>
